@@ -31,17 +31,17 @@
           <p>Text : {{todo.text}}</p>
           <button @click="doneTodo(todo.id)">Done</button>
         </li>
-    </ul>
+      </ul>
     </div>
     <div class="wrap">
-    <h2>Done</h2>
-    <ul>
-      <li v-for="done in dones">
-        <p>ID : {{done.id}}</p>
-        <p>Text : {{done.text}}</p>
-        <button @click="resetTodo(done.id)">Reset</button>
-      </li>
-    </ul>
+      <h2>Done</h2>
+      <ul>
+        <li v-for="done in dones">
+          <p>ID : {{done.id}}</p>
+          <p>Text : {{done.text}}</p>
+          <button @click="resetTodo(done.id)">Reset</button>
+        </li>
+      </ul>
     </div>
   </main>
 
@@ -54,14 +54,14 @@
         dones: []
       },
       actions: {
-        addTodo (context, {text}) {
-          context.commit('ADD_TODO',text);
+        addTodo (context, todo) {
+          context.commit('ADD_TODO',todo.text);
         },
-        done (context, {id}) {
-          context.commit('DONE_TODO',id);
+        done (context, todo) {
+          context.commit('DONE_TODO',todo.id);
         },
-        reset (context, {id}) {
-          context.commit('RESET_TODO',id);
+        reset (context, todo) {
+          context.commit('RESET_TODO',todo.id);
         }
       },
       mutations: {
