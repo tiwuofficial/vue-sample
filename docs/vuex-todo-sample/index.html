@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Vuex Todo Sample</title>
+  <link rel="stylesheet" href="">
+  <style>
+    main {
+      display: flex;
+    }
+    ul {
+      list-style: none;
+    }
+    .wrap {
+      padding: 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <main id="app">
+    <div class="wrap">
+      <h2>Todo Input</h2>
+      <input type="text" @keyup.enter="addTodoText"/>
+    </div>
+    <div class="wrap">
+      <h2>Todo List</h2>
+      <ul>
+        <li v-for="todo in todos">
+          <p>ID : {{todo.id}}</p>
+          <p>Text : {{todo.text}}</p>
+          <button @click="doneTodo(todo.id)">Done</button>
+        </li>
+    </ul>
+    </div>
+    <div class="wrap">
+    <h2>Done</h2>
+    <ul>
+      <li v-for="done in dones">
+        <p>ID : {{done.id}}</p>
+        <p>Text : {{done.text}}</p>
+        <button @click="resetTodo(done.id)">Reset</button>
+      </li>
+    </ul>
+    </div>
+  </main>
+
+  <script src="../../node_modules/vue/dist/vue.min.js"></script>
+  <script src="../../node_modules/vuex/dist/vuex.min.js"></script>
+  <script>
+    var store = new Vuex.Store({
+      state: {
+        todos: [],
+        dones: []
+      },
+      actions: {
+        addTodo (context, {text}) {
+          context.commit('ADD_TODO',text);
+        },
+        done (context, {id}) {
+          context.commit('DONE_TODO',id);
+        },
+        reset (context, {id}) {
+          context.commit('RESET_TODO',id);
+        }
+      },
+      mutations: {
+        ADD_TODO (state, text) {
+          var todo = {
+            id: 0,
+            text: text
+          }
+          if (state.todos.length !== 0) {
+            todo.id = state.todos[state.todos.length -1].id + 1;
+          }
+          state.todos.push(todo);
+        },
+        DONE_TODO (state, id) {
+          for (var i = 0; i < state.todos.length; i++) {
+            if (state.todos[i].id === id) {
+              state.dones.push(state.todos[i]);
+              state.todos.splice(i, 1);
+              break;
+            }
+          }
+        },
+        RESET_TODO (state, id) {
+          var todo = {};
+          for (var i = 0; i < state.dones.length; i++) {
+            if (state.dones[i].id === id) {
+              todo = state.dones[i];
+              state.dones.splice(i, 1);
+              break;
+            }
+          }
+          state.todos.push(todo);
+          state.todos.sort(function(a,b){
+            if(a.id<b.id) return -1;
+            if(a.id > b.id) return 1;
+            return 0;
+          })
+        }
+      }
+    });
+
+    new Vue({
+      el: '#app',
+      data: store.state,
+      methods: {
+        addTodoText: function(e){
+          var text = e.target.value;
+          store.dispatch('addTodo', {
+            text: text
+          });
+          e.target.value = '';
+        },
+        doneTodo: function(id) {
+          store.dispatch('done', {
+            id: id
+          })
+        },
+        resetTodo: function(id) {
+          store.dispatch('reset', {
+            id: id
+          })
+        },
+      }
+    })
+  </script>
+</body>
+</html>
