@@ -15,6 +15,9 @@
     .wrap {
       padding: 0 10px;
     }
+    [v-cloak] {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -25,7 +28,7 @@
     </div>
     <div class="wrap">
       <h2>Todo List</h2>
-      <ul>
+      <ul v-cloak>
         <li v-for="todo in todos">
           <p>ID : {{todo.id}}</p>
           <p>Text : {{todo.text}}</p>
@@ -35,7 +38,7 @@
     </div>
     <div class="wrap">
       <h2>Done</h2>
-      <ul>
+      <ul v-cloak>
         <li v-for="done in dones">
           <p>ID : {{done.id}}</p>
           <p>Text : {{done.text}}</p>
