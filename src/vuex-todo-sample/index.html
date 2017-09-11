@@ -108,22 +108,30 @@
 
     new Vue({
       el: '#app',
-      data: store.state,
+      store: store,
+      computed: {
+        todos: function() {
+          return this.$store.state.todos;
+        },
+        dones: function() {
+          return this.$store.state.dones;
+        }
+      },
       methods: {
         addTodoText: function(e){
           var text = e.target.value;
-          store.dispatch('addTodo', {
+          this.$store.dispatch('addTodo', {
             text: text
           });
           e.target.value = '';
         },
         doneTodo: function(id) {
-          store.dispatch('done', {
+          this.$store.dispatch('done', {
             id: id
           })
         },
         resetTodo: function(id) {
-          store.dispatch('reset', {
+          this.$store.dispatch('reset', {
             id: id
           })
         },
