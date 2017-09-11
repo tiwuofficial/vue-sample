@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Vuex Todo Sample</title>
+  <link rel="stylesheet" href="">
+  <style>
+    main {
+      display: flex;
+    }
+    ul {
+      list-style: none;
+    }
+    .wrap {
+      padding: 0 10px;
+    }
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <main id="app">
+    <div class="wrap">
+      <h2>Todo Input</h2>
+      <input type="text" @keyup.enter="addTodoText"/>
+    </div>
+    <div class="wrap">
+      <h2>Todo List</h2>
+      <ul v-cloak>
+        <li v-for="todo in todos">
+          <p>ID : {{todo.id}}</p>
+          <p>Text : {{todo.text}}</p>
+          <button @click="doneTodo(todo.id)">Done</button>
+        </li>
+      </ul>
+    </div>
+    <div class="wrap">
+      <h2>Done</h2>
+      <ul v-cloak>
+        <li v-for="done in dones">
+          <p>ID : {{done.id}}</p>
+          <p>Text : {{done.text}}</p>
+          <button @click="resetTodo(done.id)">Reset</button>
+        </li>
+      </ul>
+    </div>
+  </main>
+  <script src="js/bundle.js"></script>
+</body>
+</html>
