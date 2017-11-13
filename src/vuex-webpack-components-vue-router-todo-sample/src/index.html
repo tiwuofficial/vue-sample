@@ -10,16 +10,44 @@
     main {
       display: flex;
     }
+    #app:after {
+      content:" ";
+      display:block;
+      clear:both;
+    }
+    nav {
+      float: left;
+      padding-top: 20px;
+    }
+    .contents {
+      float: left;
+      padding-left: 20px;
+    }
+    .menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
   </style>
 </head>
 <body>
   <div id="app">
-    <header>
-      <router-link to="todoInput">Go to TodoInput</router-link>
-      <router-link to="todoList">Go to todoList</router-link>
-      <router-link to="doneList">Go to doneList</router-link>
-    </header>
-    <router-view></router-view>
+    <nav>
+      <ul class="menu">
+        <li>
+          <router-link to="todoInput">TodoInput</router-link>
+        </li>
+        <li>
+          <router-link to="todoList">TodoList</router-link>
+        </li>
+        <li>
+          <router-link to="doneList">DoneList</router-link>
+        </li>
+      </ul>
+    </nav>
+    <section class="contents">
+      <router-view></router-view>
+    </section>
   </div>
   <script src="js/bundle.js"></script>
 </body>
